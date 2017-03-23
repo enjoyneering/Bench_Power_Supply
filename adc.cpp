@@ -35,7 +35,7 @@
     NOTE: - micropocessor will be damaged, if INTERNAL ref. voltage is set up, 
             and voltage greater than 1.1v is applied to the AFER. pin
           - DEFAULT(3.3v or 5v), INTERNAL(1.1v or 2.25v), EXTERNAL
-          - first conversion, after the ADC is enabled, takes 25 ADC cycles,
+          - after the ADC is enabled, first conversion takes 25 ADC cycles
 */
 /**************************************************************************/
 void setupADC()
@@ -48,7 +48,7 @@ void setupADC()
   {
     analogReference(EXTERNAL);
   }
-  analogRead(A0);                                   //force to turne on built-in voltage ref. & initialize the ADC
+  analogRead(A0);                                   //force to turn on built-in voltage ref. & initialize the ADC
   
 }
 
@@ -61,7 +61,7 @@ void setupADC()
 /**************************************************************************/
 uint16_t readADC(uint8_t adc_pin_number)
 {
-  //delayMicroseconds(2);                           //experimental! time to switch ADC multiplexer, use if input impedance > 10kOhm
+  analogRead(adc_pin_number);                        //skip first reading to switch ADC multiplexer & to charge ADC capasitor, use if input impedance > 10kOhm
   return analogRead(adc_pin_number);
 }
 
@@ -83,16 +83,16 @@ uint16_t readOversamplingADC(uint8_t adc_pin_number, uint8_t extra_resolution)
   uint32_t average_adc_value = 0;
   uint16_t number_of_samples = 0;
 
- if (extra_resolution > 6)                           //safety check - "average_adc_value" doesn't roll over "uint32_t" limit
- {
-   extra_resolution = 6;
- }
-
+  if (extra_resolution > 6)                          //safety check - "average_adc_value" doesn't roll over "uint32_t" limit
+  {
+    extra_resolution = 6;
+  }
   number_of_samples = 1 << (extra_resolution << 1);  //1<<(n<<1) is faster than 2^2n=4^n, "pow(4, extra_resolution)"
+  
+  analogRead(adc_pin_number);                        //skip first reading to switch ADC multiplexer & to charge ADC capasitor, use if input impedance > 10kOhm
 
   for (uint16_t i = 1; i < number_of_samples; i++)
   {
-    //delayMicroseconds(2);                          //experimental! time to switch ADC multiplexer, use if input impedance > 10kOhm 
     average_adc_value += analogRead(adc_pin_number);
   }
 
