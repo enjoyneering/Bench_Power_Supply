@@ -49,7 +49,6 @@ void setupADC()
     analogReference(EXTERNAL);
   }
   analogRead(A0);                                   //force to turn on built-in voltage ref. & initialize the ADC
-  
 }
 
 /**************************************************************************/
