@@ -23,7 +23,7 @@
 #define SUM_SYMBOL    0xF6     //sum. symbol from the LCD ROM
 #define MAX_VOLTAGE   10       //max. voltage, v
 
-float   voltage;
+float   voltage               = 0;
 uint8_t current_icon          = 0;
 uint8_t icon_lowBattery[8]    = {0x0E, 0x1F, 0x11, 0x11, 0x11, 0x11, 0x1F, 0x1F};
 uint8_t icon_mediumBattery[8] = {0x0E, 0x1F, 0x11, 0x11, 0x1F, 0x1F, 0x1F, 0x1F};
