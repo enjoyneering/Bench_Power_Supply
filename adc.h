@@ -5,14 +5,18 @@
   written by : enjoyneering79
   sourse code: https://github.com/enjoyneering/
 
-  NOTE:    - ADC is optimized for output impedance <= ~10 kohm or less.
+  NOTE:    - ADC is optimized for input impedance <= ~10kOhm.
              If a source has higher impedance, the sampling time will depend
              on how long time the source needs to charge the S/H capacitor,
-             see p.312 of ATmega328 datasheet.
+             see p.312 of ATmega328 datasheet. Fairly reliable (not minimal)
+             delay is T=5*(R+100kOhm)*14pF, where R - input impedance.
+             Example for 10kOhm: 42usec. But at 16MHz, each conversion takes 13 ADC
+             clocks or 104usec. So we are OK except the time when input 
+             impedance > ~10kOhm and we are switching multiplexer.
            - ADC multiplexer also needs time to switch between analog inputs.
            - For optimum performance & accuracy, the ADC clock should not
              exceed 200 kHz. Arduino default speed is 125 kHz.
-          
+
   WARNING: - micropocessor will be damaged, if INTERNAL ref. voltage is seted up, 
              and voltage greater than 1.1v is applied to the AFER. pin
 
@@ -28,7 +32,7 @@
  #include <WProgram.h>
 #endif
 
-#define REFERENCE_VOLTAGE            3.30                                           //voltage on AREF pin, set 1.1 or 2.25 to use "INTERNAL" ref. 
+#define REFERENCE_VOLTAGE            3.35                                           //voltage on AREF pin, set 1.1 or 2.25 to use "INTERNAL" ref. 
 
 #define DEFAULT_ADC_RESOLUTION       10                                             //default ATmega328 ADC resolution, bit
 #define DEFAULT_ADC_STEPS            pow(2, DEFAULT_ADC_RESOLUTION)                 //2^10bits = 1024 steps
