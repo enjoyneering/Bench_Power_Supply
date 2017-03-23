@@ -6,7 +6,7 @@
   written by : enjoyneering79
   sourse code: https://github.com/enjoyneering/
 
-  NOTE: - voltage divider R1=100 kOhm, R2=8.2 kOhm
+  NOTE: - voltage divider R1=100kOhm, R2=8.2kOhm (for best result use R2 < 10kOhm)
         - input pin A0
         - voltage divider wiki page https://en.wikipedia.org/wiki/Voltage_divider
 
