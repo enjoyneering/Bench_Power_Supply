@@ -32,16 +32,16 @@
  #include <WProgram.h>
 #endif
 
-#define REFERENCE_VOLTAGE            3.35                                           //voltage on AREF pin, set 1.1 or 2.25 to use "INTERNAL" ref. 
+#define REFERENCE_VOLTAGE            3.30                                            //voltage on AREF pin, set 1.1 or 2.25 to use "INTERNAL" ref. 
 
-#define DEFAULT_ADC_RESOLUTION       10                                             //default ATmega328 ADC resolution, bit
-#define DEFAULT_ADC_STEPS            pow(2, DEFAULT_ADC_RESOLUTION)                 //2^10bits = 1024 steps
-#define DEFAULT_ADC_VOLTAGE_STEP     REFERENCE_VOLTAGE / DEFAULT_ADC_STEPS          //0.0012v @ 1.10v/10 bit or 0.0032v @ 3.30v/10 bit
+#define DEFAULT_ADC_RESOLUTION       10                                              //default ATmega328 ADC resolution, bit
+#define DEFAULT_ADC_STEPS            pow(2, DEFAULT_ADC_RESOLUTION)                  //2^10bits = 1024 steps
+#define DEFAULT_ADC_VOLTAGE_STEP     REFERENCE_VOLTAGE / DEFAULT_ADC_STEPS           //0.00107v @ 1.10v/10 bit or 0.00322v @ 3.30v/10 bit
 
-#define EXTRA_ADC_RESOLUTION         4                                              //1..6 bits, use 4 bit for the best result & speed
-#define OVERSAMPLED_ADC_RESOLUTION   DEFAULT_ADC_RESOLUTION + EXTRA_ADC_RESOLUTION  //oversampled resolution
-#define OVERSAMPLED_ADC_STEPS        pow(2, OVERSAMPLED_ADC_RESOLUTION)             //2^(10+4)bits = 16384 steps, if EXTRA_ADC_RESOLUTION = 4
-#define OVERSAMPLED_ADC_VOLTAGE_STEP REFERENCE_VOLTAGE / OVERSAMPLED_ADC_STEPS      //0.000067v @ 1.10v/14 bit or 0.00020v @ 3.30v/14 bit
+#define EXTRA_ADC_RESOLUTION         4                                               //1..6 bits, use 4 bit for the best result & speed
+#define OVERSAMPLED_ADC_RESOLUTION   DEFAULT_ADC_RESOLUTION + EXTRA_ADC_RESOLUTION   //oversampled resolution
+#define OVERSAMPLED_ADC_STEPS        pow(2, OVERSAMPLED_ADC_RESOLUTION)              //2^(10+4)bits = 16384 steps
+#define OVERSAMPLED_ADC_VOLTAGE_STEP REFERENCE_VOLTAGE / OVERSAMPLED_ADC_STEPS       //0.000067v @ 1.10v/14 bit or 0.000201v @ 3.30v/14 bit
 
 void     setupADC();
 uint16_t readADC(uint8_t adc_pin_number);
