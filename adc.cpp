@@ -51,20 +51,20 @@ void setupADC()
   analogRead(A0);                                   //force to turn on built-in voltage ref. & initialize the ADC
 }
 
-/**************************************************************************/
+/****************************************************************************************/
 /*
     readADC()
 
     Reads ADC value, steps
 */
-/**************************************************************************/
+/****************************************************************************************/
 uint16_t readADC(uint8_t adc_pin_number)
 {
-  analogRead(adc_pin_number);                        //skip first reading to switch ADC multiplexer & to charge ADC capasitor, use if input impedance > 10kOhm
+  analogRead(adc_pin_number);                        //skip first reading to switch multiplexer & to charge ADC capacitor, use if input impedance > 10kOhm
   return analogRead(adc_pin_number);
 }
 
-/**************************************************************************/
+/****************************************************************************************/
 /*
     readOversamplingADC()
 
@@ -76,7 +76,7 @@ uint16_t readADC(uint8_t adc_pin_number)
             is 128 than bandwidth is 125KHz/13*4^*extra_resolution = 37Hz.
           - for more info, see p.8 of "AVR121: Enhancing ADC resolution by oversampling"
 */
-/**************************************************************************/
+/****************************************************************************************/
 uint16_t readOversamplingADC(uint8_t adc_pin_number, uint8_t extra_resolution)
 {
   uint32_t average_adc_value = 0;
@@ -88,7 +88,7 @@ uint16_t readOversamplingADC(uint8_t adc_pin_number, uint8_t extra_resolution)
   }
   number_of_samples = 1 << (extra_resolution << 1);  //1<<(n<<1) is faster than 2^2n=4^n, "pow(4, extra_resolution)"
   
-  analogRead(adc_pin_number);                        //skip first reading to switch ADC multiplexer & to charge ADC capasitor, use if input impedance > 10kOhm
+  analogRead(adc_pin_number);                        //skip first reading to switch multiplexer & to charge ADC capacitor, use if input impedance > 10kOhm
 
   for (uint16_t i = 1; i < number_of_samples; i++)
   {
