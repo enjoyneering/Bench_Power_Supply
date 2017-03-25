@@ -20,13 +20,13 @@
 #endif
  #include "adc.h"
 
-#define R1_DIVIDER      100.50                                 //R1 voltage divider, kOhm. min input resistance is 30v/0.001a > 30kOhm 
-#define R2_DIVIDER      8.21                                   //R2 voltage divider, kOhm. ADC optimized for input impedance  < 10kOhm
-#define VOLTAGE_DIVIDER R2_DIVIDER / (R1_DIVIDER + R2_DIVIDER) //voltage divider coef.
+#define R1_DIVIDER                  100.50                                 //R1 voltage divider, kOhm. min input resistance is 30v/0.001a > 30kOhm 
+#define R2_DIVIDER                  8.21                                   //R2 voltage divider, kOhm. ADC optimized for input impedance  < 10kOhm
+#define VOLTAGE_DIVIDER             R2_DIVIDER / (R1_DIVIDER + R2_DIVIDER) //voltage divider coef.
 
-#define VOLTMETER_PIN   A0                                     //voltmeter pin
-#define VOLTMETER_ERROR 0.05                                   //voltmeter error, for future use
-
+#define VOLTMETER_PIN               A0                                     //voltmeter pin
+#define VOLTMETER_ERROR             0.021                                  //to show "0.00",  if connected to ground
+#define OVERSAMPLED_VOLTMETER_ERROR 0.001                                  //to show "0.000", if connected to ground
 
 float readVoltage(uint8_t adc_pin_number = VOLTMETER_PIN, float voltage_divider = VOLTAGE_DIVIDER);
 float readOversamplingVoltage(uint8_t adc_pin_number = VOLTMETER_PIN, float voltage_divider = VOLTAGE_DIVIDER);
