@@ -18,16 +18,18 @@
 #include "adc.h"
 #include "voltmeter.h"
 
-#define LCD_ROWS      4        //qnt. of lcd rows
-#define LCD_COLUMNS   20       //qnt. of lcd columns
-#define SUM_SYMBOL    0xF6     //sum. symbol from the LCD ROM
-#define MAX_VOLTAGE   10       //max. voltage, v
+#define LCD_ROWS         4     //qnt. of lcd rows
+#define LCD_COLUMNS      20    //qnt. of lcd columns
+#define LCD_SUM_SYMBOL   0xF6  //sum. symbol from the LCD ROM
+#define LCD_SPACE_SYMBOL 0x20  //space symbol from the LCD ROM
 
-float   voltage               = 0;
-uint8_t current_icon          = 0;
-uint8_t icon_lowBattery[8]    = {0x0E, 0x1F, 0x11, 0x11, 0x11, 0x11, 0x1F, 0x1F};
-uint8_t icon_mediumBattery[8] = {0x0E, 0x1F, 0x11, 0x11, 0x1F, 0x1F, 0x1F, 0x1F};
-uint8_t icon_fullBattery[8]   = {0x0E, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F};
+#define MAX_VOLTAGE      15    //max. voltage, v
+
+float    voltage               = 0;
+uint8_t  current_icon          = 0;
+uint8_t  icon_lowBattery[8]    = {0x0E, 0x1F, 0x11, 0x11, 0x11, 0x11, 0x1F, 0x1F};
+uint8_t  icon_mediumBattery[8] = {0x0E, 0x1F, 0x11, 0x11, 0x1F, 0x1F, 0x1F, 0x1F};
+uint8_t  icon_fullBattery[8]   = {0x0E, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F};
 
 LiquidCrystal_I2C lcd(PCF8574_ADDR_A21_A11_A01, 4, 5, 6, 16, 11, 12, 13, 14, POSITIVE);
 
@@ -63,13 +65,13 @@ void setup()
     lcd.print("14bit:");
 
   lcd.setCursor(14, 1);
-    lcd.write(SUM_SYMBOL);
+    lcd.write(LCD_SUM_SYMBOL);
   
   lcd.setCursor(0, 2);
     lcd.print("10bit:");
 
   lcd.setCursor(14, 2);
-    lcd.write(SUM_SYMBOL);
+    lcd.write(LCD_SUM_SYMBOL);
 }
 
 
@@ -99,6 +101,7 @@ void loop()
   lcd.setCursor(6, 1);                                                   //set 7-th colum & 2-nd row. NOTE: first colum & row started at zero
     lcd.print(voltage, 3);
     lcd.print("v ");
+
 
   lcd.setCursor(15, 1);
     lcd.print(readOversamplingADC(VOLTMETER_PIN, EXTRA_ADC_RESOLUTION));
