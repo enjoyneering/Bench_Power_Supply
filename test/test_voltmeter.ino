@@ -21,7 +21,6 @@
 #define LCD_ROWS         4     //qnt. of lcd rows
 #define LCD_COLUMNS      20    //qnt. of lcd columns
 #define LCD_SUM_SYMBOL   0xF6  //sum. symbol from the LCD ROM
-#define LCD_SPACE_SYMBOL 0x20  //space symbol from the LCD ROM
 
 #define MAX_VOLTAGE      15    //max. voltage, v
 
