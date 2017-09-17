@@ -1,28 +1,37 @@
-/******************************************************************************/
+/***************************************************************************************************/
 /*
-  This is an Arduino test sketch for "Voltmeter.h" module for
-  "Bench Power Supply" project.
+  This is an Arduino test sketch for "voltmeter.h" module for "Bench Power Supply" project.
 
   written by : enjoyneering79
   sourse code: https://github.com/enjoyneering/
 
-  NOTE: - voltage divider R1=100kOhm, R2=8.2kOhm (for best result use R2 < 10kOhm)
-        - input pin A0
+  This lcd uses I2C bus to communicate, specials pins are required to interface
+
+  Connect chip to pins:    SDA        SCL
+  Uno, Mini, Pro:          A4         A5
+  Mega2560, Due:           20         21
+  Leonardo:                2          3
+
+  NOTE: - voltage divider R1 = 100kOhm & R2 = 8.2kOhm, for best result use R2 <= 10kOhm
         - voltage divider wiki page https://en.wikipedia.org/wiki/Voltage_divider
+        - input pin A0
 
   BSD license, all text above must be included in any redistribution
 */
-/******************************************************************************/
-#include <LiquidCrystal_I2C.h> //https://github.com/enjoyneering/LiquidCrystal_I2C
+/***************************************************************************************************/
+
 #include <Wire.h>
+#include <LiquidCrystal_I2C.h> //https://github.com/enjoyneering/LiquidCrystal_I2C
 #include "adc.h"
 #include "voltmeter.h"
 
-#define LCD_ROWS         4     //qnt. of lcd rows
-#define LCD_COLUMNS      20    //qnt. of lcd columns
-#define LCD_SUM_SYMBOL   0xF6  //sum. symbol from the LCD ROM
+#define LCD_ROWS         4    //qnt. of lcd rows
+#define LCD_COLUMNS      20   //qnt. of lcd columns
 
-#define MAX_VOLTAGE      15    //max. voltage, v
+#define LCD_SUM_SYMBOL   0xF6 //lcd build-in sum.  symbol
+#define LCD_SPACE_SYMBOL 0x20 //lcd build-in space symbol
+
+#define MAX_VOLTAGE      15   //max. voltage, v
 
 float    voltage               = 0;
 uint8_t  current_icon          = 0;
@@ -60,6 +69,10 @@ void setup()
   lcd.createChar(2, icon_fullBattery);
 
   /* prints static text */
+  lcd.setCursor(14, 0);
+    lcd.print("P");
+    lcd.print(ADC_PRESCALE);
+
   lcd.setCursor(0, 1);  
     lcd.print("14bit:");
 
@@ -99,7 +112,8 @@ void loop()
   /* prints dynamic text */
   lcd.setCursor(6, 1);                                                   //set 7-th colum & 2-nd row. NOTE: first colum & row started at zero
     lcd.print(voltage, 3);
-    lcd.print("v ");
+    lcd.print("v");
+    lcd.write(LCD_SPACE_SYMBOL);
 
 
   lcd.setCursor(15, 1);
@@ -107,7 +121,8 @@ void loop()
 
   lcd.setCursor(6, 2);
     lcd.print(readVoltage(VOLTMETER_PIN, VOLTAGE_DIVIDER), 3);
-    lcd.print("v ");
+    lcd.print("v");
+    lcd.write(LCD_SPACE_SYMBOL);
   
   lcd.setCursor(15, 2);
     lcd.print(readADC(VOLTMETER_PIN));
@@ -115,5 +130,5 @@ void loop()
   /* prints horizontal graph from 0 to MAX_VOLTAGE */
   lcd.printHorizontalGraph('V', 3, voltage, MAX_VOLTAGE);                //name of the bar, row, current value, max. value
 
-  delay(1000);
+  delay(500);
 }
